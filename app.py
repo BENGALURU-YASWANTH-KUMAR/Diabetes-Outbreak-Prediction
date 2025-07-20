@@ -8,7 +8,8 @@ from xgboost import XGBClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
 import pandas as pd
 
-
+import os
+import pickle
 # Define the EnsembleClassifier class
 class EnsembleClassifier(BaseEstimator, ClassifierMixin):
     def __init__(self, weights=None):
@@ -91,21 +92,9 @@ st.markdown(
 @st.cache_resource
 def load_models():
     try:
-        heart_model = pickle.load(
-            open(r"C:\Users\yaswanth\Desktop\predictions\heart\heart_model1.pkl", "rb")
-        )
-        diabetes_model = pickle.load(
-            open(
-                r"C:\Users\yaswanth\Desktop\predictions\training\stacking_model.pkl",
-                "rb",
-            )
-        )
-        parkinson_model = pickle.load(
-            open(
-                r"C:\Users\yaswanth\Desktop\predictions\parkinson\ensemble_model.pkl",
-                "rb",
-            )
-        )
+        heart_model = pickle.load(open(r"models/heart_model1.pkl", "rb"))
+        diabetes_model = pickle.load(open(r"models/stacking_model.pkl", "rb"))
+        parkinson_model = pickle.load(open(r"models/ensemble_model.pkl", "rb"))
         return heart_model, diabetes_model, parkinson_model
     except Exception as e:
         st.error(f"Error loading models: {str(e)}")
